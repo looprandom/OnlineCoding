@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        let box = document.getElementById('box')
+            //开始拖拽
+        box.onmousedown = function(e) {
+                //获取按下鼠标时盒子与页面的距离
+                let originX = box.offsetLeft
+                let originY = box.offsetTop
+                    //获取按下鼠标时鼠标与页面的距离
+                let mouseX = e.pageX
+                let mouseY = e.pageY
+                    //在页面上移动
+                window.onmousemove = function(e) {
+                    //鼠标移动的距离 = 鼠标移动后的位置 - 按下鼠标时的位置
+                    let distanceX = e.pageX - mouseX
+                    let distanceY = e.pageY - mouseY
+                        //重新定位元素位置
+                    if (originX + distanceX < 0 || originX + distanceX > document.documentElement.clientWidth - box.offsetWidth) {
+                        return
+                    }
+
+                    if (originY + distanceY < 0 || originY + distanceY > document.documentElement.clientHeight - box.offsetHeight) {
+                        return
+                    }
+
+                    box.style.left = originX + distanceX + 'px'
+                    box.style.top = originY + distanceY + 'px'
+                }
+            }
+            // 鼠标松开解绑事件
+        box.onmouseup = function() {
+            window.onmousemove = null
+        }
+    </script>
+</body>
+
+</html>

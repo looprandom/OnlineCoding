@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function throttle(fn, delay) {
+            let pre = 0
+            return function() {
+                let _this = this
+                let args = arguments
+                let now = new Date()
+                if (now - pre > delay) {
+                    fn.apply(_this, args)
+                    pre = now
+                }
+            }
+
+        }
+
+        function testThrottle(e, content, time) {
+            console.log(e, content, time)
+        }
+
+        let fn = throttle(testThrottle, 1000)
+        document.onmousemove = function(e) {
+            fn(e, 'throttle', new Date())
+        }
+    </script>
+</body>
+
+</html>
